@@ -1,5 +1,6 @@
 package com.mirapolis.autotest.pages;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.WebDriverRunner;
 import org.junit.jupiter.api.Assertions;
 import static com.codeborne.selenide.Selenide.$;
@@ -12,10 +13,16 @@ public class AuthPage {
         $("[name='user']").sendKeys(log);
         $("[name='password']").sendKeys(pass);
         $("#button_submit_login_form").click();
+
     }
 
     public void checkAlertIsVisible(){
         String actualMessage = WebDriverRunner.driver().switchTo().alert().getText().trim();
         Assertions.assertEquals(actualMessage, ALERT_TEXT);
+    }
+
+    public void checkThatPasswordIsVisible(){
+        $("#show_password").click();
+        Assertions.assertEquals($("[name='password']").getAttribute("type"),"text");
     }
 }
